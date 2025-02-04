@@ -3,388 +3,302 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Choose Your Favorite Type of Games</title>
+    <title>Report: Students' Favorite Game Genres</title>
     <style>
-        /* General Design */
+        /* General Styles */
         body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
-            color: #fff;
+            font-family: 'Arial', sans-serif;
             margin: 0;
             padding: 0;
-            overflow-x: hidden;
+            background-color: #1e1e2e;
+            color: #f8f8f2;
             text-align: center;
+            overflow-x: hidden;
+        }
+
+        h1, h2 {
+            color: #ff79c6;
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
 
         h1 {
-            font-size: 3rem;
-            font-weight: 700;
-            margin: 20px 0;
-            color: #e94560;
-            text-shadow: 0 0 10px #e94560, 0 0 20px #e94560;
+            font-size: 2.5rem;
             animation: glow 2s infinite alternate;
         }
 
-        @keyframes glow {
-            0% {
-                text-shadow: 0 0 10px #e94560, 0 0 20px #e94560;
-            }
-            100% {
-                text-shadow: 0 0 20px #e94560, 0 0 40px #e94560;
-            }
+        h2 {
+            font-size: 1.8rem;
         }
 
-        .user-info {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-            margin: 20px auto;
+        .container {
+            max-width: 1000px;
+            margin: auto;
             padding: 20px;
-            max-width: 90%;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            animation: fadeIn 1.5s ease-in-out;
+            background-color: rgba(40, 42, 54, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            animation: fadeIn 1s ease-in-out;
+            position: relative;
+            z-index: 1;
         }
 
-        .user-info input {
-            width: 80%;
-            padding: 10px;
-            font-size: 1rem;
-            border-radius: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            background: rgba(255, 255, 255, 0.1);
-            color: #fff;
-            transition: all 0.3s ease;
-            margin: 10px 0;
+        p {
+            line-height: 1.6;
+            font-size: 1.1rem;
+            text-align: justify;
         }
 
-        .user-info input:focus {
-            outline: none;
-            border-color: #e94560;
-            box-shadow: 0 0 10px rgba(233, 69, 96, 0.5);
-        }
-
-        .game-types {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-            margin: 20px auto;
-            padding: 30px;
-            max-width: 90%;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            animation: fadeIn 1.5s ease-in-out;
-        }
-
-        @keyframes fadeIn {
-            0% {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .game-types h2 {
-            color: #e94560;
-            font-size: 2rem;
-            font-weight: 600;
-            margin-bottom: 20px;
-            text-shadow: 0 0 10px #e94560;
-        }
-
-        .game-types label {
-            display: block;
-            margin: 20px 0;
-            font-size: 1.2rem;
-            text-align: right;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            padding: 10px;
-            border-radius: 10px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .game-types label:hover {
-            background: rgba(255, 255, 255, 0.1);
-            transform: translateX(-10px);
-            box-shadow: 0 0 10px rgba(233, 69, 96, 0.5);
-        }
-
-        .game-types input[type="checkbox"] {
-            margin-left: 15px;
-            transform: scale(1.2);
-            cursor: pointer;
-            accent-color: #e94560;
-        }
-
-        .additional-type {
+        .chart-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
             margin-top: 20px;
         }
 
-        .additional-type input {
-            width: 80%;
-            padding: 10px;
-            font-size: 1rem;
+        .chart {
+            width: 100%;
+            background-color: #44475a;
+            padding: 20px;
             border-radius: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            background: rgba(255, 255, 255, 0.1);
-            color: #fff;
-            transition: all 0.3s ease;
-        }
-
-        .additional-type input:focus {
-            outline: none;
-            border-color: #e94560;
-            box-shadow: 0 0 10px rgba(233, 69, 96, 0.5);
-        }
-
-        .vote-section {
-            text-align: center;
-            margin-top: 40px;
-        }
-
-        .vote-section button {
-            padding: 15px 30px;
-            font-size: 1.2rem;
-            background: linear-gradient(135deg, #e94560, #ff6b6b);
-            color: #fff;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 0 15px rgba(233, 69, 96, 0.5);
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% {
-                transform: scale(1);
-                box-shadow: 0 0 15px rgba(233, 69, 96, 0.5);
-            }
-            50% {
-                transform: scale(1.05);
-                box-shadow: 0 0 25px rgba(233, 69, 96, 0.8);
-            }
-            100% {
-                transform: scale(1);
-                box-shadow: 0 0 15px rgba(233, 69, 96, 0.5);
-            }
-        }
-
-        .vote-section button:hover {
-            background: linear-gradient(135deg, #ff6b6b, #e94560);
-            transform: translateY(-3px);
-        }
-
-        .stats {
-            margin-top: 40px;
-            font-size: 1.2rem;
-            text-align: center;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            animation: fadeIn 1.5s ease-in-out;
-        }
-
-        .stats h2 {
-            color: #e94560;
-            font-size: 2rem;
-            font-weight: 600;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
             margin-bottom: 20px;
-            text-shadow: 0 0 10px #e94560;
         }
 
-        .stats ul {
-            list-style-type: none;
-            padding: 0;
+        canvas {
+            width: 100% !important;
+            height: auto !important;
         }
 
-        .stats ul li {
-            margin: 15px 0;
-            font-size: 1.1rem;
-            padding: 10px;
-            background: rgba(255, 255, 255, 0.05);
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
             border-radius: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s ease;
+            overflow: hidden;
         }
 
-        .stats ul li:hover {
-            background: rgba(255, 255, 255, 0.1);
-            transform: translateX(10px);
-            box-shadow: 0 0 10px rgba(233, 69, 96, 0.5);
+        th, td {
+            border: 1px solid #6272a4;
+            padding: 12px;
+            text-align: center;
         }
 
-        /* Mobile Design */
-        @media (max-width: 600px) {
+        th {
+            background-color: #50fa7b;
+            color: #282a36;
+        }
+
+        tr:nth-child(even) {
+            background-color: #44475a;
+        }
+
+        tr:hover {
+            background-color: #6272a4;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes glow {
+            0% { text-shadow: 0 0 5px #ff79c6, 0 0 10px #ff79c6, 0 0 20px #ff79c6; }
+            100% { text-shadow: 0 0 10px #ff79c6, 0 0 20px #ff79c6, 0 0 40px #ff79c6; }
+        }
+
+        /* Gaming Background */
+        .gaming-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(135deg, #1e1e2e, #282a36);
+            animation: backgroundAnimation 10s infinite alternate;
+        }
+
+        @keyframes backgroundAnimation {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 10px;
+            background-color: #50fa7b;
+            color: #282a36;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #ff79c6;
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background-color: #44475a;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-top: 20px;
+        }
+
+        .progress {
+            height: 100%;
+            width: 0;
+            background-color: #50fa7b;
+            animation: progressAnimation 5s infinite;
+        }
+
+        @keyframes progressAnimation {
+            0% { width: 0; }
+            50% { width: 100%; }
+            100% { width: 0; }
+        }
+
+        /* Media Queries for Mobile Devices */
+        @media (max-width: 768px) {
             h1 {
                 font-size: 2rem;
             }
-
-            .user-info input {
-                width: 90%;
-                font-size: 0.9rem;
-            }
-
-            .game-types {
-                padding: 20px;
-            }
-
-            .game-types h2 {
+            h2 {
                 font-size: 1.5rem;
             }
-
-            .game-types label {
+            p {
                 font-size: 1rem;
             }
-
-            .additional-type input {
-                width: 90%;
+            .container {
+                padding: 10px;
+            }
+            .chart {
+                padding: 10px;
+            }
+            table {
                 font-size: 0.9rem;
             }
-
-            .vote-section button {
-                font-size: 1rem;
-                padding: 12px 24px;
+            th, td {
+                padding: 8px;
             }
+        }
 
-            .stats h2 {
-                font-size: 1.5rem;
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.8rem;
             }
-
-            .stats ul li {
-                font-size: 1rem;
+            h2 {
+                font-size: 1.3rem;
+            }
+            p {
+                font-size: 0.9rem;
+            }
+            table {
+                font-size: 0.8rem;
+            }
+            th, td {
+                padding: 6px;
             }
         }
     </style>
 </head>
 <body>
-    <h1>What is Your Favorite Type of Games?</h1>
-
-    <!-- Name and Age Section -->
-    <div class="user-info">
-        <input type="text" id="userName" placeholder="Enter your name">
-        <input type="number" id="userAge" placeholder="Enter your age">
-    </div>
-
-    <!-- Game Types -->
-    <div class="game-types">
-        <h2>Choose Game Type:</h2>
-        <label>
-            <input type="checkbox" name="gameType" value="Action"> أكشن (Action)
-        </label>
-        <label>
-            <input type="checkbox" name="gameType" value="RPG"> ألعاب أدوار (RPG)
-        </label>
-        <label>
-            <input type="checkbox" name="gameType" value="Shooter"> ألعاب تصويب (Shooter)
-        </label>
-        <label>
-            <input type="checkbox" name="gameType" value="Open World"> عالم مفتوح (Open World)
-        </label>
-        <label>
-            <input type="checkbox" name="gameType" value="Story-Driven"> ألعاب تعتمد على القصة (Story-Driven)
-        </label>
-        <label>
-            <input type="checkbox" name="gameType" value="MMORPG"> ألعاب أدوار متعددة اللاعبين (MMORPG)
-        </label>
-        <label>
-            <input type="checkbox" name="gameType" value="Indie"> ألعاب مستقلة (Indie Games)
-        </label>
-        <label>
-            <input type="checkbox" name="gameType" value="Survival"> ألعاب بقاء (Survival)
-        </label>
-        <label>
-            <input type="checkbox" name="gameType" value="Horror"> ألعاب رعب (Horror)
-        </label>
-        <label>
-            <input type="checkbox" name="gameType" value="Sports"> ألعاب رياضية (Sports)
-        </label>
-
-        <!-- Additional Type Input -->
-        <div class="additional-type">
-            <input type="text" id="additionalType" placeholder="Type another type if you don't find it in the list">
+    <div class="gaming-background"></div>
+    <div class="container">
+        <h1>Report: Students' Favorite Game Genres</h1>
+        <p>Nowadays, video games have become an essential part of teenagers' lives, with many spending their free time playing different types of games on PCs, consoles, or mobile devices. That’s why I conducted a survey to find out which game genres students prefer the most and whether they all enjoy the same types of games.</p>
+        <h2>Survey Findings</h2>
+        <p>I questioned 27 students between the ages of 14 and 17. When asked about their favorite game genres, the results were as follows:</p>
+        <table>
+            <tr>
+                <th>Game Genre</th>
+                <th>Number of Students</th>
+            </tr>
+            <tr><td>Action</td><td>12</td></tr>
+            <tr><td>RPG (Role-Playing Games)</td><td>1</td></tr>
+            <tr><td>Shooting</td><td>3</td></tr>
+            <tr><td>Open World</td><td>6</td></tr>
+            <tr><td>Story-Driven Games</td><td>3</td></tr>
+            <tr><td>MMORPG</td><td>7</td></tr>
+            <tr><td>Survival</td><td>6</td></tr>
+            <tr><td>Horror</td><td>8</td></tr>
+            <tr><td>Sports</td><td>10</td></tr>
+            <tr><td>Battle Royale</td><td>2</td></tr>
+        </table>
+        <h2>Analysis</h2>
+        <p>Surprisingly, the most popular genre among students was Action, followed closely by Horror and Sports games. This suggests that students enjoy fast-paced, exciting, and immersive experiences. On the other hand, RPGs were the least favored genre.</p>
+        <p>Some students preferred the same genre for different purposes. For example, Sports games were enjoyed by some for competition, while others played them for relaxation.</p>
+        <h2>Visual Representation of the Survey Results</h2>
+        <div class="chart-container">
+            <div class="chart">
+                <canvas id="pieChart"></canvas>
+            </div>
+            <div class="chart">
+                <canvas id="barChart"></canvas>
+            </div>
         </div>
+        <!-- Progress Bar -->
+        <div class="progress-bar">
+            <div class="progress"></div>
+        </div>
+        <!-- Buttons -->
+        <button class="btn" onclick="alert('Thanks for reading! 🎮')">Click Me!</button>
     </div>
-
-    <!-- Vote Section -->
-    <div class="vote-section">
-        <button onclick="submitVote()">OK</button>
-    </div>
-
-    <!-- Statistics Section -->
-    <div class="stats">
-        <h2>Statistics</h2>
-        <p id="totalVotes">Total votes: 0</p>
-        <ul id="votesList"></ul>
-    </div>
-
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        // Initialize votes in localStorage if not present
-        if (!localStorage.getItem('votes')) {
-            localStorage.setItem('votes', JSON.stringify({}));
-        }
-
-        function submitVote() {
-            const userName = document.getElementById('userName').value.trim();
-            const userAge = document.getElementById('userAge').value.trim();
-
-            if (!userName || !userAge) {
-                alert('Please enter your name and age.');
-                return;
-            }
-
-            const selectedTypes = [];
-            document.querySelectorAll('input[name="gameType"]:checked').forEach(checkbox => {
-                selectedTypes.push(checkbox.value);
+        document.addEventListener("DOMContentLoaded", function() {
+            const gameGenres = [
+                { label: 'Action', value: 12 },
+                { label: 'RPG', value: 1 },
+                { label: 'Shooting', value: 3 },
+                { label: 'Open World', value: 6 },
+                { label: 'Story-Driven Games', value: 3 },
+                { label: 'MMORPG', value: 7 },
+                { label: 'Survival', value: 6 },
+                { label: 'Horror', value: 8 },
+                { label: 'Sports', value: 10 },
+                { label: 'Battle Royale', value: 2 }
+            ];
+            const pieCtx = document.getElementById('pieChart').getContext('2d');
+            new Chart(pieCtx, {
+                type: 'pie',
+                data: {
+                    labels: gameGenres.map(genre => genre.label),
+                    datasets: [{
+                        data: gameGenres.map(genre => genre.value),
+                        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40', '#E7E9ED', '#33CC33', '#FF3333', '#663399']
+                    }]
+                }
             });
-
-            const additionalType = document.getElementById('additionalType').value.trim();
-            if (additionalType) {
-                selectedTypes.push(additionalType);
-            }
-
-            if (selectedTypes.length === 0) {
-                alert('Please choose at least one type or add a new one.');
-                return;
-            }
-
-            // Update votes in localStorage
-            const votes = JSON.parse(localStorage.getItem('votes'));
-            selectedTypes.forEach(type => {
-                votes[type] = (votes[type] || 0) + 1;
+            const barCtx = document.getElementById('barChart').getContext('2d');
+            new Chart(barCtx, {
+                type: 'bar',
+                data: {
+                    labels: gameGenres.map(genre => genre.label),
+                    datasets: [{
+                        label: 'Number of Students',
+                        data: gameGenres.map(genre => genre.value),
+                        backgroundColor: '#36A2EB'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
             });
-            localStorage.setItem('votes', JSON.stringify(votes));
-
-            // Update statistics
-            loadStats();
-            alert(`Thank you, ${userName} (${userAge} years old), for your vote!`);
-        }
-
-        function loadStats() {
-            const votes = JSON.parse(localStorage.getItem('votes'));
-            const totalVotes = Object.values(votes).reduce((sum, count) => sum + count, 0);
-
-            document.getElementById('totalVotes').textContent = `Total votes: ${totalVotes}`;
-            const votesList = document.getElementById('votesList');
-            votesList.innerHTML = '';
-
-            for (const [type, count] of Object.entries(votes)) {
-                const li = document.createElement('li');
-                li.textContent = `${type}: ${count} votes (${((count / totalVotes) * 100).toFixed(2)}%)`;
-                votesList.appendChild(li);
-            }
-        }
-
-        // Load statistics when the page is opened
-        window.onload = loadStats;
+        });
     </script>
 </body>
 </html>
