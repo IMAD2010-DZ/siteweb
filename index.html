@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>اختر نوع اللعبة المفضل لديك</title>
+    <title>Choose Your Favorite Type of Games</title>
     <style>
-        /* التصميم العام */
+        /* General Design */
         body {
             font-family: 'Poppins', sans-serif;
             background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
@@ -222,7 +222,7 @@
             box-shadow: 0 0 10px rgba(233, 69, 96, 0.5);
         }
 
-        /* تصميم للهواتف المحمولة */
+        /* Mobile Design */
         @media (max-width: 600px) {
             h1 {
                 font-size: 2rem;
@@ -266,17 +266,17 @@
     </style>
 </head>
 <body>
-    <h1>?What is Your Favorite Type of Games </h1>
+    <h1>What is Your Favorite Type of Games?</h1>
 
-    <!-- قسم الاسم والعمر -->
+    <!-- Name and Age Section -->
     <div class="user-info">
-        <input type="text" id="userName" placeholder="أدخل اسمك">
-        <input type="number" id="userAge" placeholder="أدخل عمرك">
+        <input type="text" id="userName" placeholder="Enter your name">
+        <input type="number" id="userAge" placeholder="Enter your age">
     </div>
 
-    <!-- أنواع الألعاب -->
+    <!-- Game Types -->
     <div class="game-types">
-        <h2>:Choose Game Type</h2>
+        <h2>Choose Game Type:</h2>
         <label>
             <input type="checkbox" name="gameType" value="Action"> أكشن (Action)
         </label>
@@ -308,18 +308,18 @@
             <input type="checkbox" name="gameType" value="Sports"> ألعاب رياضية (Sports)
         </label>
 
-        <!-- حقل إدخال نوع إضافي -->
+        <!-- Additional Type Input -->
         <div class="additional-type">
             <input type="text" id="additionalType" placeholder="Type another type if you don't find it in the list">
         </div>
     </div>
 
-    <!-- قسم التصويت -->
+    <!-- Vote Section -->
     <div class="vote-section">
         <button onclick="submitVote()">OK</button>
     </div>
 
-    <!-- قسم الإحصائيات -->
+    <!-- Statistics Section -->
     <div class="stats">
         <h2>Statistics</h2>
         <p id="totalVotes">Total votes: 0</p>
@@ -327,7 +327,7 @@
     </div>
 
     <script>
-        // تهيئة التصويتات في LocalStorage إذا لم تكن موجودة
+        // Initialize votes in localStorage if not present
         if (!localStorage.getItem('votes')) {
             localStorage.setItem('votes', JSON.stringify({}));
         }
@@ -337,7 +337,7 @@
             const userAge = document.getElementById('userAge').value.trim();
 
             if (!userName || !userAge) {
-                alert('الرجاء إدخال الاسم والعمر.');
+                alert('Please enter your name and age.');
                 return;
             }
 
@@ -352,38 +352,38 @@
             }
 
             if (selectedTypes.length === 0) {
-                alert('الرجاء اختيار نوع واحد على الأقل أو كتابة نوع جديد.');
+                alert('Please choose at least one type or add a new one.');
                 return;
             }
 
-            // تحديث التصويتات في LocalStorage
+            // Update votes in localStorage
             const votes = JSON.parse(localStorage.getItem('votes'));
             selectedTypes.forEach(type => {
                 votes[type] = (votes[type] || 0) + 1;
             });
             localStorage.setItem('votes', JSON.stringify(votes));
 
-            // تحديث الإحصائيات
+            // Update statistics
             loadStats();
-            alert(`شكرًا ${userName} (${userAge} سنة) على تصويتك!`);
+            alert(`Thank you, ${userName} (${userAge} years old), for your vote!`);
         }
 
         function loadStats() {
             const votes = JSON.parse(localStorage.getItem('votes'));
             const totalVotes = Object.values(votes).reduce((sum, count) => sum + count, 0);
 
-            document.getElementById('totalVotes').textContent = `إجمالي الأصوات: ${totalVotes}`;
+            document.getElementById('totalVotes').textContent = `Total votes: ${totalVotes}`;
             const votesList = document.getElementById('votesList');
             votesList.innerHTML = '';
 
             for (const [type, count] of Object.entries(votes)) {
                 const li = document.createElement('li');
-                li.textContent = `${type}: ${count} صوت (${((count / totalVotes) * 100).toFixed(2)}%)`;
+                li.textContent = `${type}: ${count} votes (${((count / totalVotes) * 100).toFixed(2)}%)`;
                 votesList.appendChild(li);
             }
         }
 
-        // تحميل الإحصائيات عند فتح الصفحة
+        // Load statistics when the page is opened
         window.onload = loadStats;
     </script>
 </body>
