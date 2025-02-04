@@ -1,267 +1,390 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Magic Navigation Menu | code_wars_official</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Poppins', sans-serif;
-    }
-    :root {
-      --clr: #000000;
-    }
-    body {
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      min-height: 100vh;
-      background: var(--clr);
-    }
-    .navigation {
-      width: 400px;
-      height: 70px;
-      background: rgba(75, 75, 75, 0.8);
-      position: absolute;
-      top: 50px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      border-radius: 10px;
-    }
-    .navigation ul {
-      display: flex;
-      width: 350px;
-    }
-    .navigation ul li {
-      position: relative;
-      list-style: none;
-      width: 70px;
-      height: 70px;
-      z-index: 1;
-    }
-    .navigation ul li a {
-      position: relative;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      width: 100%;
-      text-align: center;
-      font-weight: 500;
-    }
-    .navigation ul li a .icon {
-      position: relative;
-      display: block;
-      line-height: 75px;
-      font-size: 1.5rem;
-      text-align: center;
-      transition: 0.5s;
-      color: var(--clr);
-    }
-    .navigation ul li.active a .icon {
-      transform: translateY(-32px);
-    }
-    .navigation ul li a .text {
-      position: absolute;
-      color: var(--clr);
-      font-weight: 400;
-      font-size: 0.75em;
-      letter-spacing: 0.05em;
-      transition: 0.5s;
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    .navigation ul li.active a .text {
-      transform: translateY(10px);
-      opacity: 1;
-    }
-    .indicator {
-      position: absolute;
-      top: -50%;
-      width: 70px;
-      height: 70px;
-      background: #fd2929;
-      border-radius: 50%;
-      border: 6px solid var(--clr);
-      transition: 0.5s;
-    }
-    .indicator::before {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: -22px;
-      width: 20px;
-      height: 20px;
-      background: transparent;
-      border-top-right-radius: 20px;
-      box-shadow: 1px -10px 0 0 var(--clr);
-    }
-    .indicator::after {
-      content: '';
-      position: absolute;
-      top: 50%;
-      right: -22px;
-      width: 20px;
-      height: 20px;
-      background: transparent;
-      border-top-left-radius: 20px;
-      box-shadow: -1px -10px 0 0 var(--clr);
-    }
-    .navigation ul li:nth-child(1).active ~ .indicator {
-      transform: translateX(calc(70px * 0));
-    }
-    .navigation ul li:nth-child(2).active ~ .indicator {
-      transform: translateX(calc(70px * 1));
-    }
-    .navigation ul li:nth-child(3).active ~ .indicator {
-      transform: translateX(calc(70px * 2));
-    }
-    .navigation ul li:nth-child(4).active ~ .indicator {
-      transform: translateX(calc(70px * 3));
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اختر نوع اللعبة المفضل لديك</title>
+    <style>
+        /* التصميم العام */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            text-align: center;
+        }
 
-    /* نافذة لعرض المعلومات */
-    .popup {
-      display: none;
-      position: fixed;
-      top: 150px;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: #fff;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-      z-index: 1000;
-      width: 80%;
-      max-width: 500px;
-    }
-    .popup .popup-header {
-      font-size: 1.2em;
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
-    .popup .popup-body {
-      margin-bottom: 15px;
-    }
-    .popup .popup-body p {
-      font-size: 1em;
-      line-height: 1.5;
-    }
+        h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin: 20px 0;
+            color: #e94560;
+            text-shadow: 0 0 10px #e94560, 0 0 20px #e94560;
+            animation: glow 2s infinite alternate;
+        }
 
-    /* إظهار النافذة عند النقر */
-    .popup.active {
-      display: block;
-    }
-  </style>
+        @keyframes glow {
+            0% {
+                text-shadow: 0 0 10px #e94560, 0 0 20px #e94560;
+            }
+            100% {
+                text-shadow: 0 0 20px #e94560, 0 0 40px #e94560;
+            }
+        }
+
+        .user-info {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            margin: 20px auto;
+            padding: 20px;
+            max-width: 90%;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        .user-info input {
+            width: 80%;
+            padding: 10px;
+            font-size: 1rem;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            transition: all 0.3s ease;
+            margin: 10px 0;
+        }
+
+        .user-info input:focus {
+            outline: none;
+            border-color: #e94560;
+            box-shadow: 0 0 10px rgba(233, 69, 96, 0.5);
+        }
+
+        .game-types {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            margin: 20px auto;
+            padding: 30px;
+            max-width: 90%;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .game-types h2 {
+            color: #e94560;
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px #e94560;
+        }
+
+        .game-types label {
+            display: block;
+            margin: 20px 0;
+            font-size: 1.2rem;
+            text-align: right;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 10px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .game-types label:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(-10px);
+            box-shadow: 0 0 10px rgba(233, 69, 96, 0.5);
+        }
+
+        .game-types input[type="checkbox"] {
+            margin-left: 15px;
+            transform: scale(1.2);
+            cursor: pointer;
+            accent-color: #e94560;
+        }
+
+        .additional-type {
+            margin-top: 20px;
+        }
+
+        .additional-type input {
+            width: 80%;
+            padding: 10px;
+            font-size: 1rem;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            transition: all 0.3s ease;
+        }
+
+        .additional-type input:focus {
+            outline: none;
+            border-color: #e94560;
+            box-shadow: 0 0 10px rgba(233, 69, 96, 0.5);
+        }
+
+        .vote-section {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .vote-section button {
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            background: linear-gradient(135deg, #e94560, #ff6b6b);
+            color: #fff;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(233, 69, 96, 0.5);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 15px rgba(233, 69, 96, 0.5);
+            }
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 0 25px rgba(233, 69, 96, 0.8);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 15px rgba(233, 69, 96, 0.5);
+            }
+        }
+
+        .vote-section button:hover {
+            background: linear-gradient(135deg, #ff6b6b, #e94560);
+            transform: translateY(-3px);
+        }
+
+        .stats {
+            margin-top: 40px;
+            font-size: 1.2rem;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        .stats h2 {
+            color: #e94560;
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px #e94560;
+        }
+
+        .stats ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .stats ul li {
+            margin: 15px 0;
+            font-size: 1.1rem;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .stats ul li:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(10px);
+            box-shadow: 0 0 10px rgba(233, 69, 96, 0.5);
+        }
+
+        /* تصميم للهواتف المحمولة */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .user-info input {
+                width: 90%;
+                font-size: 0.9rem;
+            }
+
+            .game-types {
+                padding: 20px;
+            }
+
+            .game-types h2 {
+                font-size: 1.5rem;
+            }
+
+            .game-types label {
+                font-size: 1rem;
+            }
+
+            .additional-type input {
+                width: 90%;
+                font-size: 0.9rem;
+            }
+
+            .vote-section button {
+                font-size: 1rem;
+                padding: 12px 24px;
+            }
+
+            .stats h2 {
+                font-size: 1.5rem;
+            }
+
+            .stats ul li {
+                font-size: 1rem;
+            }
+        }
+    </style>
 </head>
 <body>
-  <div class="navigation">
-    <ul>
-      <li class="list active">
-        <a href="#" onclick="openPopup('home')">
-          <span class="icon">
-            <ion-icon name="home-outline"></ion-icon>
-          </span>
-          <span class="text">Home</span>
-        </a>
-      </li>
-      <li class="list">
-        <a href="#" onclick="openPopup('game')">
-          <span class="icon">
-            <ion-icon name="game-controller-outline"></ion-icon>
-          </span>
-          <span class="text">Game</span>
-        </a>
-      </li>
-      <li class="list">
-        <a href="#" onclick="openPopup('books')">
-          <span class="icon">
-            <ion-icon name="book-outline"></ion-icon>
-          </span>
-          <span class="text">Books</span>
-        </a>
-      </li>
-      <li class="list">
-        <a href="#" onclick="openPopup('settings')">
-          <span class="icon">
-            <ion-icon name="settings-outline"></ion-icon>
-          </span>
-          <span class="text">Settings</span>
-        </a>
-      </li>
-      <div class="indicator"></div>
-    </ul>
-  </div>
+    <h1>?What is Your Favorite Type of Games </h1>
 
-  <!-- نافذة لعرض المعلومات -->
-  <div class="popup" id="home-popup">
-    <div class="popup-header">Home Information</div>
-    <div class="popup-body">
-      <p>This is the Home section. Information related to home will appear here.</p>
+    <!-- قسم الاسم والعمر -->
+    <div class="user-info">
+        <input type="text" id="userName" placeholder="أدخل اسمك">
+        <input type="number" id="userAge" placeholder="أدخل عمرك">
     </div>
-  </div>
-  <div class="popup" id="game-popup">
-    <div class="popup-header">Game Information</div>
-    <div class="popup-body">
-      <p>This is the Game section. Information related to games will appear here.</p>
+
+    <!-- أنواع الألعاب -->
+    <div class="game-types">
+        <h2>:Choose Game Type</h2>
+        <label>
+            <input type="checkbox" name="gameType" value="Action"> أكشن (Action)
+        </label>
+        <label>
+            <input type="checkbox" name="gameType" value="RPG"> ألعاب أدوار (RPG)
+        </label>
+        <label>
+            <input type="checkbox" name="gameType" value="Shooter"> ألعاب تصويب (Shooter)
+        </label>
+        <label>
+            <input type="checkbox" name="gameType" value="Open World"> عالم مفتوح (Open World)
+        </label>
+        <label>
+            <input type="checkbox" name="gameType" value="Story-Driven"> ألعاب تعتمد على القصة (Story-Driven)
+        </label>
+        <label>
+            <input type="checkbox" name="gameType" value="MMORPG"> ألعاب أدوار متعددة اللاعبين (MMORPG)
+        </label>
+        <label>
+            <input type="checkbox" name="gameType" value="Indie"> ألعاب مستقلة (Indie Games)
+        </label>
+        <label>
+            <input type="checkbox" name="gameType" value="Survival"> ألعاب بقاء (Survival)
+        </label>
+        <label>
+            <input type="checkbox" name="gameType" value="Horror"> ألعاب رعب (Horror)
+        </label>
+        <label>
+            <input type="checkbox" name="gameType" value="Sports"> ألعاب رياضية (Sports)
+        </label>
+
+        <!-- حقل إدخال نوع إضافي -->
+        <div class="additional-type">
+            <input type="text" id="additionalType" placeholder="Type another type if you don't find it in the list">
+        </div>
     </div>
-  </div>
-  <div class="popup" id="books-popup">
-    <div class="popup-header">Books Information</div>
-    <div class="popup-body">
-      <p>This is the Books section. Information related to books will appear here.</p>
+
+    <!-- قسم التصويت -->
+    <div class="vote-section">
+        <button onclick="submitVote()">OK</button>
     </div>
-  </div>
-  <div class="popup" id="settings-popup">
-    <div class="popup-header">Settings Information</div>
-    <div class="popup-body">
-      <p>This is the Settings section. Information related to settings will appear here.</p>
+
+    <!-- قسم الإحصائيات -->
+    <div class="stats">
+        <h2>Statistics</h2>
+        <p id="totalVotes">Total votes: 0</p>
+        <ul id="votesList"></ul>
     </div>
-  </div>
 
-  <script src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-  <script>
-    const list = document.querySelectorAll('.list');
-    const homePopup = document.getElementById('home-popup');
-    const gamePopup = document.getElementById('game-popup');
-    const booksPopup = document.getElementById('books-popup');
-    const settingsPopup = document.getElementById('settings-popup');
+    <script>
+        // تهيئة التصويتات في LocalStorage إذا لم تكن موجودة
+        if (!localStorage.getItem('votes')) {
+            localStorage.setItem('votes', JSON.stringify({}));
+        }
 
-    function activeLink() {
-      list.forEach(item => item.classList.remove('active'));
-      this.classList.add('active');
-    }
+        function submitVote() {
+            const userName = document.getElementById('userName').value.trim();
+            const userAge = document.getElementById('userAge').value.trim();
 
-    function openPopup(type) {
-      // إخفاء جميع النوافذ
-      homePopup.classList.remove('active');
-      gamePopup.classList.remove('active');
-      booksPopup.classList.remove('active');
-      settingsPopup.classList.remove('active');
+            if (!userName || !userAge) {
+                alert('الرجاء إدخال الاسم والعمر.');
+                return;
+            }
 
-      // عرض النافذة المرتبطة بالقسم
-      if (type === 'home') {
-        homePopup.classList.add('active');
-      } else if (type === 'game') {
-        gamePopup.classList.add('active');
-      } else if (type === 'books') {
-        booksPopup.classList.add('active');
-      } else if (type === 'settings') {
-        settingsPopup.classList.add('active');
-      }
-    }
+            const selectedTypes = [];
+            document.querySelectorAll('input[name="gameType"]:checked').forEach(checkbox => {
+                selectedTypes.push(checkbox.value);
+            });
 
-    list.forEach(item => item.addEventListener('click', activeLink));
+            const additionalType = document.getElementById('additionalType').value.trim();
+            if (additionalType) {
+                selectedTypes.push(additionalType);
+            }
 
-    // عرض نافذة "Home" عند تحميل الصفحة
-    openPopup('home');
-  </script>
+            if (selectedTypes.length === 0) {
+                alert('الرجاء اختيار نوع واحد على الأقل أو كتابة نوع جديد.');
+                return;
+            }
+
+            // تحديث التصويتات في LocalStorage
+            const votes = JSON.parse(localStorage.getItem('votes'));
+            selectedTypes.forEach(type => {
+                votes[type] = (votes[type] || 0) + 1;
+            });
+            localStorage.setItem('votes', JSON.stringify(votes));
+
+            // تحديث الإحصائيات
+            loadStats();
+            alert(`شكرًا ${userName} (${userAge} سنة) على تصويتك!`);
+        }
+
+        function loadStats() {
+            const votes = JSON.parse(localStorage.getItem('votes'));
+            const totalVotes = Object.values(votes).reduce((sum, count) => sum + count, 0);
+
+            document.getElementById('totalVotes').textContent = `إجمالي الأصوات: ${totalVotes}`;
+            const votesList = document.getElementById('votesList');
+            votesList.innerHTML = '';
+
+            for (const [type, count] of Object.entries(votes)) {
+                const li = document.createElement('li');
+                li.textContent = `${type}: ${count} صوت (${((count / totalVotes) * 100).toFixed(2)}%)`;
+                votesList.appendChild(li);
+            }
+        }
+
+        // تحميل الإحصائيات عند فتح الصفحة
+        window.onload = loadStats;
+    </script>
 </body>
 </html>
